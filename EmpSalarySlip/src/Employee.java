@@ -1,6 +1,8 @@
 //Good Encapsulation - Make data private and methods public
 //- Encapsulation + Data Hiding
-public class Employee {
+
+// Internally all classes extends Object class
+public class Employee extends Object {
 	
 	// Instance Variables
 	private int empId;
@@ -103,6 +105,13 @@ public class Employee {
 		double deductions = getTDS() + getPF();
 		double payableSalary = earnings - deductions;
 		return payableSalary;
+	}
+	
+	@Override
+	public String toString() {
+		return "Emp Name : " + this.name + "\n" +
+				"Emp Dept : " + this.dept + "\n" + 
+				"Emp Salary : " + netSalary(); 
 	}
 	
 	
