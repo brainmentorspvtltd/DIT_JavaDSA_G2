@@ -109,6 +109,8 @@ public class Employee extends Object {
 	
 	@Override
 	public String toString() {
+		CommonUtils utils = new CommonUtils();
+		this.name = utils.formatValue(this.name);
 		return "Emp Name : " + this.name + "\n" +
 				"Emp Dept : " + this.dept + "\n" + 
 				"Emp Salary : " + netSalary(); 

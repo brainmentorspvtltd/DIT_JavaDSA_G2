@@ -6,7 +6,7 @@ public class EmpCaller {
 		//Employee ram = new Employee();
 		
 		// it will call param const...
-		Employee ram = new Employee(101, "Ram", 50000.00);
+		Employee ram = new Employee(101, "rAm ShARmA", 50000.00);
 		//ram.salary = 1000;
 		//System.out.println(ram.salary);
 		//ram.setSalary(ram.getSalary() + 5000);
