@@ -109,11 +109,14 @@ public class Employee extends Object {
 	
 	@Override
 	public String toString() {
-		CommonUtils utils = new CommonUtils();
+		CommonUtils utils = new CommonUtils("hi", "IN");
+		String date = utils.formatDate();
 		this.name = utils.formatValue(this.name);
-		return "Emp Name : " + this.name + "\n" +
+		String sal = utils.formatSalary(netSalary());
+		return "Date : " + date + "\n" + 
+				"Emp Name : " + this.name + "\n" +
 				"Emp Dept : " + this.dept + "\n" + 
-				"Emp Salary : " + netSalary(); 
+				"Emp Salary : " + sal; 
 	}
 	
 	
