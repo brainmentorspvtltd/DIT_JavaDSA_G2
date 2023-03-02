@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class EmpCaller {
 
 	public static void main(String[] args) {
@@ -6,7 +8,27 @@ public class EmpCaller {
 		//Employee ram = new Employee();
 		
 		// it will call param const...
-		Employee ram = new Employee(101, "rAm ShARmA", 50000.00);
+		Scanner scanner = new Scanner(System.in);
+		
+		MessageReader mr = new MessageReader();
+		
+		//System.out.println("Enter Employee ID : ");
+		System.out.println(mr.getValue("welcomeMsg"));
+		
+		System.out.println(mr.getValue("input.id"));
+		int empID = scanner.nextInt();
+		
+		scanner.nextLine();
+		
+		System.out.println(mr.getValue("input.name"));
+		//System.out.println("Enter Employee Name : ");
+		String name = scanner.nextLine();
+		
+		System.out.println(mr.getValue("input.salary"));
+		//System.out.println("Enter Employee Salary : ");
+		double salary = scanner.nextDouble();
+		
+		Employee ram = new Employee(empID, name, salary);
 		//ram.salary = 1000;
 		//System.out.println(ram.salary);
 		//ram.setSalary(ram.getSalary() + 5000);
@@ -26,8 +48,10 @@ public class EmpCaller {
 		
 		System.out.println("=====================");
 		
-		Employee raman = new Employee(102, "Raman", 80000.00);
-		System.out.println(raman);
+//		Employee raman = new Employee(102, "Raman", 80000.00);
+//		System.out.println(raman);
+		
+		scanner.close();
 
 	}
 
