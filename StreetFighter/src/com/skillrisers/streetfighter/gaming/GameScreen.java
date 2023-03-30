@@ -2,11 +2,18 @@ package com.skillrisers.streetfighter.gaming;
 
 import javax.swing.JFrame;
 
-public class GameScreen extends JFrame {
+import com.skillrisers.streetfighter.utils.GameConstants;
+
+public class GameScreen extends JFrame implements GameConstants {
 	
 	public GameScreen() {
-		setSize(1500,800);
-		setTitle("Street Fighter By Brain Mentors");
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(SCREENWIDTH, SCREENHEIGHT);
+		setLocationRelativeTo(null);
+		setTitle(TITLE);
+		GameBoard board = new GameBoard();
+		add(board);
 		setVisible(true);
 	}
 	
