@@ -6,7 +6,7 @@ import com.skillrisers.streetfighter.utils.GameConstants;
 
 public class GameScreen extends JFrame implements GameConstants {
 	
-	public GameScreen() {
+	public GameScreen() throws Exception {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(SCREENWIDTH, SCREENHEIGHT);
@@ -19,7 +19,12 @@ public class GameScreen extends JFrame implements GameConstants {
 	
 	public static void main(String[] args) {
 		
-		GameScreen obj = new GameScreen();
+		try {
+			GameScreen obj = new GameScreen();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

@@ -8,17 +8,21 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import com.skillrisers.streetfighter.sprites.Player;
 import com.skillrisers.streetfighter.utils.GameConstants;
 
 public class GameBoard extends JPanel implements GameConstants {
 	BufferedImage bgImage;
-	public GameBoard() {
+	private Player player;
+	public GameBoard() throws Exception {
+		player = new Player();
 		loadBackground();
 	}
 	@Override
 	public void paintComponent(Graphics pen) {
 		//System.out.println("Paint Component...");
-		paintBackground(pen);	
+		paintBackground(pen);
+		player.paintPlayer(pen);
 	}
 	private void paintBackground(Graphics pen) {
 		
