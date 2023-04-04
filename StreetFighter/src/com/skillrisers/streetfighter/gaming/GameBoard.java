@@ -2,6 +2,8 @@ package com.skillrisers.streetfighter.gaming;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
@@ -19,7 +21,9 @@ public class GameBoard extends JPanel implements GameConstants {
 	public GameBoard() throws Exception {
 		player = new Player();
 		oppPlayer = new OpponentPlayer();
+		setFocusable(true);
 		loadBackground();
+		bindEvents();
 	}
 	@Override
 	public void paintComponent(Graphics pen) {
@@ -37,6 +41,49 @@ public class GameBoard extends JPanel implements GameConstants {
 		pen.setColor(Color.GREEN);
 		pen.fillRect(900, 10, 600,50);
 	}
+	
+	void bindEvents() {
+		this.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				System.out.println("Key Typed : " + e.getKeyCode());
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				System.out.println("Key Released : " + e.getKeyCode());
+				player.setSpeed(0);
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				//System.out.println("Key Pressed : " + e.getKeyCode());
+				if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+					player.setSpeed(-SPEED);
+					player.move();
+					repaint();
+				}
+				else if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+					player.setSpeed(SPEED);
+					player.move();
+					repaint();
+				}
+				
+				if(e.getKeyCode() == KeyEvent.VK_A) {
+					oppPlayer.setSpeed(-SPEED);
+					oppPlayer.move();
+					repaint();
+				}
+				else if(e.getKeyCode() == KeyEvent.VK_D) {
+					oppPlayer.setSpeed(SPEED);
+					oppPlayer.move();
+					repaint();
+				}
+			}
+		});
+	}
+	
 	private void loadBackground() {
 		try {
 			bgImage = ImageIO.read(GameBoard.class.getResource("bg_2.jpg"));
