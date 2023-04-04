@@ -8,15 +8,17 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import com.skillrisers.streetfighter.sprites.OpponentPlayer;
 import com.skillrisers.streetfighter.sprites.Player;
 import com.skillrisers.streetfighter.utils.GameConstants;
 
 public class GameBoard extends JPanel implements GameConstants {
 	BufferedImage bgImage;
 	private Player player;
-	private OpponentPlayer player;
+	private OpponentPlayer oppPlayer;
 	public GameBoard() throws Exception {
 		player = new Player();
+		oppPlayer = new OpponentPlayer();
 		loadBackground();
 	}
 	@Override
@@ -24,6 +26,7 @@ public class GameBoard extends JPanel implements GameConstants {
 		//System.out.println("Paint Component...");
 		paintBackground(pen);
 		player.paintPlayer(pen);
+		oppPlayer.paintPlayer(pen);
 	}
 	private void paintBackground(Graphics pen) {
 		
@@ -36,7 +39,7 @@ public class GameBoard extends JPanel implements GameConstants {
 	}
 	private void loadBackground() {
 		try {
-			bgImage = ImageIO.read(GameBoard.class.getResource("background.png"));
+			bgImage = ImageIO.read(GameBoard.class.getResource("bg_2.jpg"));
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Something went wrong...");

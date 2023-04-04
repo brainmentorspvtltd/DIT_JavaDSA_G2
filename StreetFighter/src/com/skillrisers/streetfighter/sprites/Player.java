@@ -6,11 +6,7 @@ import javax.imageio.ImageIO;
 import com.skillrisers.streetfighter.utils.GameConstants;
 
 public class Player extends CommonPlayer implements GameConstants {
-	private int x;
-	private int y;
-	private int w;
-	private int h;
-	BufferedImage playerImg;
+	
 	public Player() throws Exception {
 		x = 150;
 		y = GROUND;
@@ -18,12 +14,11 @@ public class Player extends CommonPlayer implements GameConstants {
 		h = 250;
 		playerImg = ImageIO.read(Player.class.getResource("ken_.png"));
 	}
-	public BufferedImage defaultImage(){
-		//
-		return 
+	
+	@Override
+	public BufferedImage defaultImage() {
+		//X = 47 Y = 242 Width = 110 Height = 245
+		return playerImg.getSubimage(47, 242, 110, 245);
 	}
-
-	public void paintPlayer(Graphics pen) {
-		pen.drawImage(playerImg, x, y, w, h, null);
-	}
+	
 }
