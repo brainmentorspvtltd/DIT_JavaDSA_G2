@@ -14,6 +14,7 @@ import com.skillrisers.streetfighter.utils.GameConstants;
 public class GameBoard extends JPanel implements GameConstants {
 	BufferedImage bgImage;
 	private Player player;
+	private OpponentPlayer player;
 	public GameBoard() throws Exception {
 		player = new Player();
 		loadBackground();
