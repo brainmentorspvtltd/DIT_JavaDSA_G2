@@ -10,6 +10,7 @@ public class Player extends CommonPlayer implements GameConstants {
 	private BufferedImage idleImages[] = new BufferedImage[4];
 	private BufferedImage walkImages[] = new BufferedImage[5];
 	private BufferedImage kickImages[] = new BufferedImage[5];
+	private BufferedImage punchImages[] = new BufferedImage[3];
 	
 	private int force;
 	public Player() throws Exception {
@@ -23,6 +24,7 @@ public class Player extends CommonPlayer implements GameConstants {
 		loadIdleImages();
 		loadWalkImages();
 		loadKickImages();
+		loadPunchImages();
 	}
 	
 	private void loadIdleImages() {
@@ -48,9 +50,16 @@ public class Player extends CommonPlayer implements GameConstants {
 		kickImages[4] = playerImg.getSubimage(56, 1458, 117, 247);
 	}
 	
+	private void loadPunchImages() {
+		punchImages[0] = playerImg.getSubimage(43, 485, 119, 247);
+		punchImages[1] = playerImg.getSubimage(260, 486, 166, 242);
+		punchImages[2] = playerImg.getSubimage(478, 490, 115, 242);
+	}
+	
 	public BufferedImage printIdle() {
 		//X = 47 Y = 242 Width = 110 Height = 245
 		//return playerImg.getSubimage(47, 242, 110, 245);
+		isAttacking = false;
 		if(imageIndex > 3) {
 			imageIndex = 0;
 		}
@@ -60,6 +69,7 @@ public class Player extends CommonPlayer implements GameConstants {
 	}
 	
 	public BufferedImage printWalk() {
+		isAttacking = false;
 		if(imageIndex > 4) {
 			imageIndex = 0;
 			currentMove = IDLE;
@@ -73,14 +83,28 @@ public class Player extends CommonPlayer implements GameConstants {
 		if(imageIndex > 4) {
 			imageIndex = 0;
 			currentMove = IDLE;
+			isAttacking = false;
 		}
+		isAttacking = true;
 		BufferedImage img = kickImages[imageIndex];
 		imageIndex++;
 		return img;
 	}
 	
+	public BufferedImage printPunch() {
+		if(imageIndex > 2) {
+			imageIndex = 0;
+			currentMove = IDLE;
+			isAttacking = false;
+		}
+		isAttacking = true;
+		BufferedImage img = punchImages[imageIndex];
+		imageIndex++;
+		return img;
+	}
+	
 	public void jump() {
-		force = -50;
+		force = -40;
 		y = y + force;
 	}
 	
@@ -99,6 +123,9 @@ public class Player extends CommonPlayer implements GameConstants {
 		}
 		else if(currentMove == KICK) {
 			return printKick();
+		}
+		else if(currentMove == PUNCH) {
+			return printPunch();
 		}
 		else {
 			return printIdle();

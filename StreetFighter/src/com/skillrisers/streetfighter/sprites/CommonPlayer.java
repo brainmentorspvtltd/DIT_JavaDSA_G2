@@ -12,13 +12,33 @@ public abstract class CommonPlayer {
 	protected BufferedImage playerImg;
 	protected int imageIndex;
 	protected int currentMove;
+	protected boolean isCollide;
+	protected boolean isAttacking;
 //	protected int force;
 	public abstract BufferedImage defaultImage();
 	
+	public boolean isCollide() {
+		return isCollide;
+	}
+
+	public void setCollide(boolean isCollide) {
+		this.isCollide = isCollide;
+	}
+
 	public void move() {
-		x = x + speed;
+		if(!isCollide) {
+			x = x + speed;
+		}
 	}
 	
+	public boolean isAttacking() {
+		return isAttacking;
+	}
+
+	public void setAttacking(boolean isAttacking) {
+		this.isAttacking = isAttacking;
+	}
+
 	public int getCurrentMove() {
 		return currentMove;
 	}
