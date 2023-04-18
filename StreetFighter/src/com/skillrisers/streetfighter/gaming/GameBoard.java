@@ -1,6 +1,7 @@
 package com.skillrisers.streetfighter.gaming;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +17,10 @@ import javax.swing.Timer;
 import com.skillrisers.streetfighter.sprites.Health;
 import com.skillrisers.streetfighter.sprites.OpponentPlayer;
 import com.skillrisers.streetfighter.sprites.Player;
+import com.skillrisers.streetfighter.sprites.PowerEffect;
 import com.skillrisers.streetfighter.utils.GameConstants;
+
+import jaco.mp3.player.MP3Player;
 
 public class GameBoard extends JPanel implements GameConstants {
 	BufferedImage bgImage;
@@ -25,6 +29,8 @@ public class GameBoard extends JPanel implements GameConstants {
 	private Health ryu_health;
 	private Health ken_health;
 	private Timer timer;
+	private boolean isGameOver;
+	private MP3Player mp3player;
 	public GameBoard() throws Exception {
 		player = new Player();
 		oppPlayer = new OpponentPlayer();
@@ -32,7 +38,13 @@ public class GameBoard extends JPanel implements GameConstants {
 		loadBackground();
 		bindEvents();
 		loadHealth();
+		loadMusic();
 		gameLoop();
+	}
+	
+	private void loadMusic(){
+		mp3player = new MP3Player(GameBoard.class.getResource("StreetFighter.mp3"));
+		mp3player.play();
 	}
 	
 	private void gameLoop() {
@@ -49,8 +61,8 @@ public class GameBoard extends JPanel implements GameConstants {
 	}
 	
 	private void loadHealth() {
-		ryu_health = new Health(30, Color.GREEN);
-		ken_health = new Health(SCREENWIDTH - 560, Color.GREEN);
+		ryu_health = new Health(30, "RYU");
+		ken_health = new Health(SCREENWIDTH - 560, "KEN");
 	}
 	
 	private void printHealth(Graphics pen) {
@@ -74,19 +86,31 @@ public class GameBoard extends JPanel implements GameConstants {
 			else if(player.isAttacking()) {
 				//oppPlayer.prinHitImages();
 				oppPlayer.setCurrentMove(HIT);
+				ken_health.setHealth();
 			}
 			else if(oppPlayer.isAttacking()) {
 				
 			}
-			System.out.println("Collision Detected...");
+			
+			if(ken_health.getHealth() <= 0 || ryu_health.getHealth() <= 0) {
+				isGameOver = true;
+			}
+			
+			//System.out.println("Collision Detected...");
 			player.setCollide(true);
 			player.setSpeed(0);
 		}
 		else {
 			player.setCollide(false);
-			System.out.println("No Collision...");
+			//System.out.println("No Collision...");
 			player.setSpeed(SPEED);
 		}
+	}
+	
+	private void printGameOver(Graphics pen) {
+		pen.setColor(Color.WHITE);
+		pen.setFont(new Font("times", Font.BOLD, 80));
+		pen.drawString("Game Over", SCREENWIDTH/2 - 160, SCREENHEIGHT/2 - 80);
 	}
 	
 	@Override
@@ -96,6 +120,11 @@ public class GameBoard extends JPanel implements GameConstants {
 		player.paintPlayer(pen);
 		oppPlayer.paintPlayer(pen);
 		printHealth(pen);
+		printPower(pen);
+		if(isGameOver) {
+			printGameOver(pen);
+			timer.stop();
+		}
 	}
 	private void paintBackground(Graphics pen) {
 		pen.drawImage(bgImage, 0,0,SCREENWIDTH, SCREENHEIGHT, null);
@@ -146,6 +175,10 @@ public class GameBoard extends JPanel implements GameConstants {
 				else if(e.getKeyCode() == KeyEvent.VK_SPACE) {
 					player.jump();
 				}
+				else if(e.getKeyCode() == KeyEvent.VK_Z) {
+					player.setCurrentMove(POWER);
+					player.showPower();
+				}
 
 				
 				if(e.getKeyCode() == KeyEvent.VK_A) {
@@ -160,6 +193,12 @@ public class GameBoard extends JPanel implements GameConstants {
 				}
 			}
 		});
+	}
+	
+	private void printPower(Graphics pen) {
+		for(PowerEffect power : player.getPowers()) {
+			power.printPower(pen);
+		}
 	}
 	
 	private void loadBackground() {
